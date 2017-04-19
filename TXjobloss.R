@@ -1,5 +1,7 @@
 txjobloss <- function()
 {
+    #library("devtools")
+    #install_github('konoanalytics/KonostdlibR')
     library("KonostdlibR")
     dfjobloss <- gethistory()
     dftxcities <- gettxcitygps()
@@ -9,15 +11,15 @@ txjobloss <- function()
     pushtodomo(df=dfjobloss,datasetname="TX WARN Notifications", api_key=KonostdlibR::getcredentials("Domo"))
 }
 
-pushtodomo <- function(df, datasetname, api_key, organization="KonoAnalytics", createdataset=FALSE)
+pushtodomo <- function(df, datasetname, api_key=NULL, organization="KonoAnalytics", createdataset=FALSE)
 {
     #library("devtools")
     #install_github('konoanalytics/KonostdlibR')
     library("KonostdlibR")
     library("DomoR")
     
-    apikey <- as.character(KonostdlibR::getcredentials("Domo")$api_key)
-    DomoR::init(organization,apikey)
+    api_key <- as.character(KonostdlibR::getcredentials("Domo")$api_key)
+    DomoR::init(organization,api_key)
     if(createdataset)
     {
         DomoR::create(df, name=datasetname)
